@@ -11,21 +11,22 @@ submitButtonSelector.forEach(btn => {
 })
 
 function handleGuest(btnId){
+    let inputName = guestName.value
     switch(btnId){
         case("add-vip"):      
-        guestList.unshift(guestName.value)
+        guestList.unshift(inputName)
         break;
         case("add-peasant"):      
-        guestList.push(guestName.value)
+        guestList.push(inputName)
         break;
         case("remove-vip"):      
-        guestList.shift(guestName.value)
+        guestList.shift(inputName)
         break;
         case("remove-peasant"):      
-        guestList.pop(guestName.value)
+        guestList.pop(inputName)
         break;
         case("shuffle-guests"):      
-        guestList.reverse(guestName.value)
+        guestList.reverse(inputName)
         break;
         case("remove-guests"):
         let startPoint = Number(document.getElementById("guest-start-position").value)
@@ -37,6 +38,15 @@ function handleGuest(btnId){
             guestList.splice(startPoint, endPoint)        
         }
         break;
+        case("inverse-name"):      
+        console.log(inverseName(inputName))
+        break;
+        case("sort-az"):
+        sortList(btnId)
+        break;
+        case("sort-za"):
+        sortList(btnId)
+        break;
     }
 }
 
@@ -47,6 +57,39 @@ function showGuestList(){
         document.querySelector("#guest-list").appendChild(guestName).innerText = guest
     })
 }
+
+function inverseName(guestName){
+    let reversedName = [];
+    for(let i = guestName.length; i >= 0; i--){
+        reversedName.push(guestName[i])
+    }
+    console.log(reversedName.join(''))
+}
+
+function sortList(sortDirection){
+    if(sortDirection === "sort-az"){
+        guestList.sort((a,b) =>{
+            return a.toLowerCase().localeCompare(b.toLowerCase())
+        })
+        return guestList
+    }
+    else if (sortDirection === "sort-za"){
+        guestList.sort(function(a, b){
+            return b.toLowerCase().localeCompare(a.toLowerCase())
+        })
+    }
+}
+
+function findAndReplace(fruitArr, searchName, replaceName){
+    fruitArr.forEach((value, i) =>{
+        if(value === searchName && replaceName != null){
+            fruitArr[i] = replaceName
+        }     
+        })
+        return fruitArr
+}
+
+//findAndReplace(["apple", "orange", "kiwi", "orange"], "orange")
 
 // var dataLabel= document.createElement("guest");
 // document.querySelector("#guest-list").appendChild(dataLabel)
